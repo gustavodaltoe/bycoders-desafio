@@ -1,0 +1,4 @@
+/*.js
+*.d.ts
+.vscode
+node_modules

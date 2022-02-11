@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "moduleResolution": "Node",
+    "module": "CommonJS",
+    "target": "ES2018",
+    "sourceMap": true,
+    "lib": [
+      "esnext"
+    ],
+    "esModuleInterop": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "@/*": [
+        "./packages/*/src"
+      ]
+    }
+  },
+  "references": [
+    { "path": "packages/server" },
+    { "path": "packages/web" },
+  ],
+  "exclude": ["node_modules", "dist", "*.d.ts"]
+}
