@@ -18,14 +18,12 @@
     "noUnusedLocals": true,
     "resolveJsonModule": true,
     "paths": {
-      "@/*": [
-        "./packages/*/src"
-      ]
+      "@web/*": ["packages/web/src/*"],
+      "@server/*": ["packages/server/src/*"],
     }
   },
   "references": [
     { "path": "packages/server" },
     { "path": "packages/web" },
   ],
-  "exclude": ["node_modules", "dist", "*.d.ts"]
 }

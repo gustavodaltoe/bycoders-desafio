@@ -1,20 +1,18 @@
 FROM node:16-alpine
 
 RUN apk update \
-    && apk add bash \
-    && yarn set version berry
+    && apk add bash
 
 WORKDIR /app
 
 ENV PATH /app/node_modules/.bin:$PATH
 
-COPY .yarn ./.yarn
 COPY packages/web/package.json ./packages/web/
-COPY package.json .yarnrc.yml yarn.lock ./
+COPY package.json yarn.lock lerna.json ./
 
 RUN set -x \
     && yarn install
 
-COPY . .
+COPY ./packages/web .
 
 CMD ["yarn", "web:dev"]

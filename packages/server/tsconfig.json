@@ -10,9 +10,7 @@
     "noEmit": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
   },
-  "include": [
-    "src/**/*"
-  ],
+  "include": ["src"],
 }
