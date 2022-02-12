@@ -6,13 +6,11 @@ RUN apk update \
 
 WORKDIR /app
 
+COPY packages/server/package.json ./packages/server/
 COPY .yarn ./.yarn
-COPY package.json packages/server/package.json \
-    .yarnrc.yml yarn.lock ./
+COPY package.json .yarnrc.yml yarn.lock ./
 
 RUN set -x \
     && yarn install
-
-COPY . .
 
 CMD ["yarn", "server:dev"]
