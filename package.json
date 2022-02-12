@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "web:dev": "yarn workspace @bycoders/web dev",
-    "server:dev": "yarn workspace @bycoders/server dev"
+    "server:dev": "yarn workspace @bycoders/server dev",
+    "server:test": "yarn workspace @bycoders/server test"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.11.0",
