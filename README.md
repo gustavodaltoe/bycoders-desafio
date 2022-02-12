@@ -1,3 +1,13 @@
+# Rodando o ambiente
+
+Para rodar a aplicação dentro de containers no Docker:
+
+    $ docker-compose up
+
+Para rodar os testes unitários:
+
+    $ docker-compose run server yarn server:test
+
 # Desafio programação - para vaga desenvolvedor
 
 Por favor leiam este documento do começo ao fim, com muita atenção.
