@@ -1,9 +1,8 @@
 import { Router } from 'express';
+import { cnabRouter } from './cnab.routes';
 
 const router = Router();
 
-router.use('/', (req, res) => {
-  res.send('Hello World!');
-});
+router.use('/cnab', cnabRouter);
 
 export { router };
