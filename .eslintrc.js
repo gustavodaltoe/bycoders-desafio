@@ -30,4 +30,9 @@ module.exports = {
     "react/prop-types": "off",
     "react/display-name": "off"
   },
+  settings: {
+    'import/resolver': {
+      directory: "packages/*/tsconfig.json", // this loads <rootdir>/tsconfig.json to eslint
+    },
+  },
 };

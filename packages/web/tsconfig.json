@@ -22,7 +22,5 @@
     "jsx": "react-jsx",
     "noEmit": false,
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src"]
 }

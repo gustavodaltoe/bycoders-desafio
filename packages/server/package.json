@@ -4,7 +4,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules --exit-child src/infra/http/server.ts",
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --exit-child src/infra/http/server.ts",
     "build": "tsc",
     "test": "jest"
   },
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "tsconfig-paths": "^3.12.0"
   }
 }

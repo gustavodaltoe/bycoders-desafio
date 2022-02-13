@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
-    "baseUrl": ".",
     "moduleResolution": "Node",
     "module": "CommonJS",
     "target": "ES2018",
@@ -17,13 +15,5 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "resolveJsonModule": true,
-    "paths": {
-      "@web/*": ["packages/web/src/*"],
-      "@server/*": ["packages/server/src/*"],
-    }
   },
-  "references": [
-    { "path": "packages/server" },
-    { "path": "packages/web" },
-  ],
 }
