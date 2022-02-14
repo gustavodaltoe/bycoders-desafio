@@ -26,7 +26,7 @@ export class TextFileUploadMiddleware implements Middleware {
           resolve(fail(err));
         } else {
           const content = request.file?.buffer.toString('utf8');
-          resolve(ok({ fileText: content }));
+          resolve(ok({ fileText: content?.trim() }));
         }
       });
     });
