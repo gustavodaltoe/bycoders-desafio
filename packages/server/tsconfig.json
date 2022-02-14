@@ -11,13 +11,13 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "@modules/*": ["./src/modules/*"],
-      "@infra/*": ["./src/infra/*"],
-      "@core/*": ["./src/core/*"],
-      "@config/*": ["./src/config/*"]
+      "@modules/*": ["modules/*"],
+      "@infra/*": ["infra/*"],
+      "@core/*": ["core/*"],
+      "@config/*": ["config/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src"]
 }
