@@ -1,4 +1,4 @@
-import { HttpResponse } from '@core/infra/HttpResponse';
+import { clientError, HttpResponse, ok } from '@core/infra/HttpResponse';
 import { Middleware } from '@core/infra/Middleware';
 import { Request, Response } from 'express';
 import multer from 'multer';
@@ -21,18 +21,12 @@ export class TextFileUploadMiddleware implements Middleware {
       upload(request, {} as Response, (err) => {
         const isMulterError = err instanceof multer.MulterError;
         if (isMulterError) {
-          resolve({ statusCode: 400, body: { error: err.message } });
+          resolve(clientError(err));
         } else if (err) {
-          console.error(err);
-          resolve({
-            statusCode: 500,
-            body: { error: err.message },
-          });
+          resolve(fail(err));
         } else {
-          resolve({
-            statusCode: 200,
-            body: { fileText: request.file?.buffer.toString('utf8') },
-          });
+          const content = request.file?.buffer.toString('utf8');
+          resolve(ok({ fileText: content }));
         }
       });
     });
