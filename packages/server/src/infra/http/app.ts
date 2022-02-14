@@ -1,5 +1,7 @@
 import cors from 'cors';
 import express from 'express';
+import { config } from 'dotenv-flow';
+config({ silent: true });
 
 import { router } from './routes';
 
