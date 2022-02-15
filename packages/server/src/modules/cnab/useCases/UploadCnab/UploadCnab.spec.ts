@@ -61,4 +61,16 @@ describe('Upload CNAB file', () => {
 
     expect(await storesRepository.exists(cpf, store)).toBeTruthy();
   });
+
+  it('Should not create a store if it already exists', async () => {
+    const cpf = '12345678901';
+    const store = 'Store';
+    const cnab = CnabTextFactory.create({ cpf, store });
+
+    await uploadCnab.execute(cnab.value);
+    await uploadCnab.execute(cnab.value);
+
+    expect(await storesRepository.exists(cpf, store)).toBeTruthy();
+    expect(storesRepository.items.length).toBe(1);
+  });
 });
