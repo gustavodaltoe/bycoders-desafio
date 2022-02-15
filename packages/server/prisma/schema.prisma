@@ -25,5 +25,16 @@ model Store {
   owner    StoreOwner @relation(fields: [ownerCpf], references: [cpf])
   ownerCpf String     @map("owner_id")
 
+  Transactions Transaction[]
   @@map("stores")
+}
+
+model Transaction {
+  id       String   @id
+  amount   Int
+  store    Store    @relation(fields: [storeId], references: [id])
+  storeId  String   @map("store_id")
+  dateTime DateTime @map("date_time")
+
+  @@map("transactions")
 }

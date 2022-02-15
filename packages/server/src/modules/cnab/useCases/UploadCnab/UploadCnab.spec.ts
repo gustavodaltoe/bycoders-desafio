@@ -1,18 +1,25 @@
 import { InMemoryStoreOwnersRepository } from '@modules/cnab/repositories/in-memory/InMemoryStoreOwnersRepository';
 import { InMemoryStoresRepository } from '@modules/cnab/repositories/in-memory/InMemoryStoresRepository';
+import { InMemoryTransactionsRepository } from '@modules/cnab/repositories/in-memory/InMemoryTransactionsRepository';
 import { CnabTextFactory } from '@test/factories/CnabTextFactory';
 import { EmptyCnabContentError } from './errors/EmptyCnabContentError';
 import { UploadCnab } from './UploadCnab';
 
 let storeOwnersRepository: InMemoryStoreOwnersRepository;
 let storesRepository: InMemoryStoresRepository;
+let transactionsRepository: InMemoryTransactionsRepository;
 let uploadCnab: UploadCnab;
 
 describe('Upload CNAB file', () => {
   beforeEach(() => {
     storeOwnersRepository = new InMemoryStoreOwnersRepository();
     storesRepository = new InMemoryStoresRepository();
-    uploadCnab = new UploadCnab(storeOwnersRepository, storesRepository);
+    transactionsRepository = new InMemoryTransactionsRepository();
+    uploadCnab = new UploadCnab(
+      storeOwnersRepository,
+      storesRepository,
+      transactionsRepository,
+    );
   });
 
   it('Should return empty file error if the string is empty', async () => {
@@ -103,6 +110,20 @@ describe('Upload CNAB file', () => {
     await uploadCnab.execute(cnab.value);
 
     expect(storesRepository.items[0].balance).toBe(amounts[0] - amounts[1]);
+  });
+
+  it('Should store the transactions', async () => {
+    const cpf = '12345678901';
+    const store = 'Store';
+    const cpf2 = '12345678902';
+    const store2 = 'Store 2';
+    const cnab = CnabTextFactory.create({ cpf, store })
+      .addLine({ cpf, store })
+      .addLine({ cpf: cpf2, store: store2 });
+
+    await uploadCnab.execute(cnab.value);
+
+    expect(transactionsRepository.items.length).toBe(3);
   });
 });
 
