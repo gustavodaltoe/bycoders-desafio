@@ -27,8 +27,8 @@ export class CnabTextFactory {
     };
     const [date, hours] = dayjs(data.date).format('YYYYMMDD HHmmss').split(' ');
     const amount = data.amount.toString().padStart(10, '0');
-    const owner = data.storeOwner.padEnd(14, ' ').toUpperCase();
-    const store = data.store.padEnd(19, ' ').toUpperCase();
+    const owner = data.storeOwner.padEnd(14, ' ');
+    const store = data.store.padEnd(19, ' ');
 
     const line = `${data.type}${date}${amount}${data.cpf}${data.card}${hours}${owner}${store}`;
     return new CnabTextFactory(line);
