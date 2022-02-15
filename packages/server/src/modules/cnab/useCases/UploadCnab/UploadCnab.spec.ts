@@ -76,8 +76,8 @@ describe('Upload CNAB file', () => {
   it('Should sum the balance of the store foreach cnab line for it', async () => {
     const cpf = '12345678901';
     const store = 'Store';
-    const amount1 = Math.floor(Math.random() * 1000) + 1;
-    const amount2 = Math.floor(Math.random() * 1000) + 1;
+    const amount1 = randomAmount();
+    const amount2 = randomAmount();
 
     await uploadCnab.execute(
       CnabTextFactory.create({ cpf, store, amount: amount1 }).value,
@@ -86,8 +86,26 @@ describe('Upload CNAB file', () => {
       CnabTextFactory.create({ cpf, store, amount: amount2 }).value,
     );
 
-    console.log(storesRepository.items);
     expect(await storesRepository.exists(cpf, store)).toBeTruthy();
     expect(storesRepository.items[0].balance).toBe(amount1 + amount2);
   });
+
+  it('Should sum or subtract the balance based on the transaction type and amount', async () => {
+    const amounts = [randomAmount(), randomAmount()];
+    const cnab = CnabTextFactory.create({
+      type: 1,
+      amount: amounts[0],
+    }).addLine({
+      type: 2,
+      amount: amounts[1],
+    });
+
+    await uploadCnab.execute(cnab.value);
+
+    expect(storesRepository.items[0].balance).toBe(amounts[0] - amounts[1]);
+  });
 });
+
+function randomAmount() {
+  return Math.floor(Math.random() * 1000) + 1;
+}

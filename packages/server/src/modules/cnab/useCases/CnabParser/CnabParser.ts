@@ -1,4 +1,5 @@
 import { CNABDateTime } from '@modules/cnab/domain/cnab/CnabDateTime';
+import { TransactionTypeKey } from '@modules/cnab/domain/transaction-type/transaction-type';
 import { CNABLineData } from '@modules/cnab/dtos/CnabLineData';
 
 type ParsedCNAB = Array<CNABLineData>;
@@ -10,7 +11,7 @@ export class CnabParser {
       const date = line.substring(1, 9);
       const hours = line.substring(42, 48);
       return {
-        type: Number(line.substring(0, 1)),
+        type: Number(line.substring(0, 1)) as TransactionTypeKey,
         date: CNABDateTime.parse(date, hours),
         amount: Number(line.substring(9, 19)),
         cpf: line.substring(19, 30),

@@ -1,6 +1,7 @@
 import { Either, left, right } from '@core/logic/Either';
 import { StoreOwner } from '@modules/cnab/domain/store-owner/store-owner';
 import { Store } from '@modules/cnab/domain/store/store';
+import { TransactionType } from '@modules/cnab/domain/transaction-type/transaction-type';
 import { StoreOwnersRepository } from '@modules/cnab/repositories/StoreOwnersRepository';
 import { StoresRepository } from '@modules/cnab/repositories/StoresRepository';
 import { CnabParser } from '../CnabParser/CnabParser';
@@ -18,38 +19,37 @@ export class UploadCnab {
     if (!cnab.trim().length) return left(new EmptyCnabContentError());
 
     const parsedCnab = CnabParser.execute(cnab);
-    await Promise.all(
-      parsedCnab.map(async (line) => {
-        const storeOwnerExists = await this.storeOwnersRepository.exists(
+    for (const line of parsedCnab) {
+      const storeOwnerExists = await this.storeOwnersRepository.exists(
+        line.cpf,
+      );
+      if (!storeOwnerExists) {
+        const storeOwner = StoreOwner.create(
+          {
+            cpf: line.cpf,
+            name: line.storeOwner,
+          },
           line.cpf,
         );
-        if (!storeOwnerExists) {
-          const storeOwner = StoreOwner.create(
-            {
-              cpf: line.cpf,
-              name: line.storeOwner,
-            },
-            line.cpf,
-          );
-          await this.storeOwnersRepository.create(storeOwner);
-        }
-        const persistedStore = await this.storesRepository.findByName(
-          line.cpf,
-          line.store,
-        );
-        if (!persistedStore) {
-          const store = Store.create({
-            name: line.store,
-            ownerCpf: line.cpf,
-            balance: line.amount,
-          });
-          await this.storesRepository.create(store);
-        } else {
-          persistedStore.addBalance(line.amount);
-          await this.storesRepository.save(persistedStore);
-        }
-      }),
-    );
+        await this.storeOwnersRepository.create(storeOwner);
+      }
+      const persistedStore = await this.storesRepository.findByName(
+        line.cpf,
+        line.store,
+      );
+      const amount = line.amount * TransactionType[line.type].signal;
+      if (!persistedStore) {
+        const store = Store.create({
+          name: line.store,
+          ownerCpf: line.cpf,
+          balance: amount,
+        });
+        await this.storesRepository.create(store);
+      } else {
+        persistedStore.addBalance(amount);
+        await this.storesRepository.save(persistedStore);
+      }
+    }
 
     return right(null);
   }

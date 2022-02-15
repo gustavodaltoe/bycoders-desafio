@@ -1,5 +1,7 @@
+import { TransactionTypeKey } from '../domain/transaction-type/transaction-type';
+
 export type CNABLineData = {
-  type: number;
+  type: TransactionTypeKey;
   date: Date;
   amount: number;
   cpf: string;
