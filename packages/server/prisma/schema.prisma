@@ -22,8 +22,8 @@ model Store {
   id       String     @id
   name     String
   balance  BigInt     @default(0)
-  owner    StoreOwner @relation(fields: [owner_id], references: [cpf])
-  owner_id String
+  owner    StoreOwner @relation(fields: [ownerCpf], references: [cpf])
+  ownerCpf String     @map("owner_id")
 
   @@map("stores")
 }
