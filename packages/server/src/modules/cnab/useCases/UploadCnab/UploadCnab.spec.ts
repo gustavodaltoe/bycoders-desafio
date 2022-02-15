@@ -70,7 +70,24 @@ describe('Upload CNAB file', () => {
     await uploadCnab.execute(cnab.value);
     await uploadCnab.execute(cnab.value);
 
-    expect(await storesRepository.exists(cpf, store)).toBeTruthy();
     expect(storesRepository.items.length).toBe(1);
+  });
+
+  it('Should sum the balance of the store foreach cnab line for it', async () => {
+    const cpf = '12345678901';
+    const store = 'Store';
+    const amount1 = Math.floor(Math.random() * 1000) + 1;
+    const amount2 = Math.floor(Math.random() * 1000) + 1;
+
+    await uploadCnab.execute(
+      CnabTextFactory.create({ cpf, store, amount: amount1 }).value,
+    );
+    await uploadCnab.execute(
+      CnabTextFactory.create({ cpf, store, amount: amount2 }).value,
+    );
+
+    console.log(storesRepository.items);
+    expect(await storesRepository.exists(cpf, store)).toBeTruthy();
+    expect(storesRepository.items[0].balance).toBe(amount1 + amount2);
   });
 });

@@ -10,6 +10,17 @@ export class InMemoryStoresRepository implements StoresRepository {
     );
   }
 
+  async findByName(ownerCpf: string, name: string): Promise<Store | undefined> {
+    return this.items.find(
+      (store) => store.ownerCpf === ownerCpf && store.name === name,
+    );
+  }
+
+  async save(store: Store): Promise<void> {
+    const index = this.items.findIndex((item) => item.id === store.id);
+    this.items[index] = store;
+  }
+
   async create(store: Store): Promise<void> {
     this.items.push(store);
   }

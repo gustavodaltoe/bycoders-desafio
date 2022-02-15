@@ -10,6 +10,21 @@ export class PrismaStoresRepository implements StoresRepository {
     return !!storeExists;
   }
 
+  async findByName(ownerCpf: string, name: string): Promise<Store | undefined> {
+    const store = await prisma.store.findFirst({
+      where: { ownerCpf, name },
+    });
+    if (!store) return;
+    return Store.create(store, store.id);
+  }
+
+  async save(store: Store): Promise<void> {
+    await prisma.store.update({
+      where: { id: store.id },
+      data: store.toPersistence(),
+    });
+  }
+
   async create(store: Store): Promise<void> {
     await prisma.store.create({ data: store.toPersistence() });
   }

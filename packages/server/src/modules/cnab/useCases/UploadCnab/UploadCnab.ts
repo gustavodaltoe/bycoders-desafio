@@ -33,16 +33,20 @@ export class UploadCnab {
           );
           await this.storeOwnersRepository.create(storeOwner);
         }
-        const storeExists = await this.storesRepository.exists(
+        const persistedStore = await this.storesRepository.findByName(
           line.cpf,
           line.store,
         );
-        if (!storeExists) {
+        if (!persistedStore) {
           const store = Store.create({
             name: line.store,
             ownerCpf: line.cpf,
+            balance: line.amount,
           });
           await this.storesRepository.create(store);
+        } else {
+          persistedStore.addBalance(line.amount);
+          await this.storesRepository.save(persistedStore);
         }
       }),
     );

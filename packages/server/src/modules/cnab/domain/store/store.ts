@@ -33,6 +33,10 @@ export class Store extends Entity<StoreProps> {
     );
   }
 
+  addBalance(value: number) {
+    this.props.balance = this.balance + value;
+  }
+
   toPersistence() {
     return {
       id: this.id,
