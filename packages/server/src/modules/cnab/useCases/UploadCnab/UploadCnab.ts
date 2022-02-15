@@ -15,11 +15,16 @@ export class UploadCnab {
     const parsedCnab = CnabParser.execute(cnab);
     await Promise.all(
       parsedCnab.map(async (line) => {
-        const storeOwner = StoreOwner.create({
-          cpf: line.cpf,
-          name: line.storeOwner,
-        });
-        return this.storeOwnersRepository.create(storeOwner);
+        const storeOwnerExists = await this.storeOwnersRepository.exists(
+          line.cpf,
+        );
+        if (!storeOwnerExists) {
+          const storeOwner = StoreOwner.create({
+            cpf: line.cpf,
+            name: line.storeOwner,
+          });
+          await this.storeOwnersRepository.create(storeOwner);
+        }
       }),
     );
 

@@ -1,10 +1,9 @@
 import { InMemoryStoreOwnersRepository } from '@modules/cnab/repositories/in-memory/InMemoryStoreOwnersRepository';
-import { StoreOwnersRepository } from '@modules/cnab/repositories/StoreOwnersRepository';
 import { CnabTextFactory } from '@test/factories/CnabTextFactory';
 import { EmptyCnabContentError } from './errors/EmptyCnabContentError';
 import { UploadCnab } from './UploadCnab';
 
-let storeOwnersRepository: StoreOwnersRepository;
+let storeOwnersRepository: InMemoryStoreOwnersRepository;
 let uploadCnab: UploadCnab;
 
 describe('Upload CNAB file', () => {
@@ -30,12 +29,23 @@ describe('Upload CNAB file', () => {
     expect(result.isRight()).toBeTruthy();
   });
 
-  it('Should save the store owner', async () => {
+  it('Should create the store owner', async () => {
     const cpf = '12345678901';
     const cnab = CnabTextFactory.create({ cpf });
 
     await uploadCnab.execute(cnab.value);
 
-    expect(await storeOwnersRepository.exists(cpf));
+    expect(await storeOwnersRepository.exists(cpf)).toBeTruthy();
+  });
+
+  it('Should not create a store owners if it already exists', async () => {
+    const cpf = '12345678901';
+    const cnab = CnabTextFactory.create({ cpf });
+
+    await uploadCnab.execute(cnab.value);
+    await uploadCnab.execute(cnab.value);
+
+    expect(await storeOwnersRepository.exists(cpf)).toBeTruthy();
+    expect(storeOwnersRepository.items.length).toBe(1);
   });
 });
