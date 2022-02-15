@@ -1,20 +1,12 @@
 import { CNABDateTime } from '@modules/cnab/domain/cnab/CnabDateTime';
+import { CNABLineData } from '@modules/cnab/dtos/CnabLineData';
 
-type ParsedCNABLine = {
-  type: number;
-  date: Date;
-  amount: number;
-  cpf: string;
-  card: string;
-  storeOwner: string;
-  store: string;
-};
-type ParsedCNAB = Array<ParsedCNABLine>;
+type ParsedCNAB = Array<CNABLineData>;
 
 export class CnabParser {
   execute(cnab: string): ParsedCNAB {
     const cnabLines = cnab.split('\n');
-    const parsedCNAB = cnabLines.map<ParsedCNABLine>((line) => {
+    const parsedCNAB = cnabLines.map<CNABLineData>((line) => {
       const date = line.substring(1, 9);
       const hours = line.substring(42, 48);
       return {
