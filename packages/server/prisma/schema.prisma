@@ -11,8 +11,19 @@ datasource db {
 }
 
 model StoreOwner {
-  cpf       String @id
-  name      String
+  cpf   String  @id
+  name  String
+  Store Store[]
 
   @@map("store_owners")
+}
+
+model Store {
+  id       String     @id
+  name     String
+  balance  BigInt     @default(0)
+  owner    StoreOwner @relation(fields: [owner_id], references: [cpf])
+  owner_id String
+
+  @@map("stores")
 }
