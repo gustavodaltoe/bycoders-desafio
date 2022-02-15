@@ -31,7 +31,9 @@ model Store {
 
 model Transaction {
   id       String   @id
+  type     Int
   amount   Int
+  card     String
   store    Store    @relation(fields: [storeId], references: [id])
   storeId  String   @map("store_id")
   dateTime DateTime @map("date_time")
