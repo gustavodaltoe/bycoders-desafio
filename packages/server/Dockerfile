@@ -23,5 +23,3 @@ RUN set -x \
 COPY . .
 
 ENTRYPOINT ["dockerize", "-wait", "tcp://postgres:5432", "-timeout", "20s", "./packages/server/scripts/server.sh"]
-
-CMD ["yarn", "server:dev"]
