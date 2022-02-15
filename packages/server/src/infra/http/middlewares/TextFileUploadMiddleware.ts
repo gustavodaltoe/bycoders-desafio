@@ -1,4 +1,4 @@
-import { clientError, HttpResponse, ok } from '@core/infra/HttpResponse';
+import { clientError, fail, HttpResponse, ok } from '@core/infra/HttpResponse';
 import { Middleware } from '@core/infra/Middleware';
 import { Request, Response } from 'express';
 import multer from 'multer';

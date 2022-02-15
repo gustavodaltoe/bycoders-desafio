@@ -1,5 +1,10 @@
 import { Controller } from '@core/infra/Controller';
-import { clientError, created, HttpResponse } from '@core/infra/HttpResponse';
+import {
+  clientError,
+  created,
+  fail,
+  HttpResponse,
+} from '@core/infra/HttpResponse';
 import { UploadCnab } from './UploadCnab';
 
 type UploadCnabControllerRequest = {
