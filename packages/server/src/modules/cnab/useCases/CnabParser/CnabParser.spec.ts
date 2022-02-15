@@ -4,7 +4,6 @@ import { CnabParser } from './CnabParser';
 
 describe('Cnab Parser', () => {
   it('Should be able to parse the cnab data to ParsedCNAB type', () => {
-    const parser = new CnabParser();
     const cnabData: CNABLineData = {
       type: 3,
       date: new Date('2019-03-01T15:34:53-03:00'),
@@ -16,7 +15,7 @@ describe('Cnab Parser', () => {
     };
     const cnab = CnabTextFactory.create(cnabData).addLine().value;
 
-    const parsedCNAB = parser.execute(cnab);
+    const parsedCNAB = CnabParser.execute(cnab);
 
     expect(parsedCNAB).toHaveLength(2);
     expect(parsedCNAB[0].type).toBe(cnabData.type);

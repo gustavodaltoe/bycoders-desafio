@@ -4,7 +4,7 @@ import { CNABLineData } from '@modules/cnab/dtos/CnabLineData';
 type ParsedCNAB = Array<CNABLineData>;
 
 export class CnabParser {
-  execute(cnab: string): ParsedCNAB {
+  static execute(cnab: string): ParsedCNAB {
     const cnabLines = cnab.split('\n');
     const parsedCNAB = cnabLines.map<CNABLineData>((line) => {
       const date = line.substring(1, 9);
