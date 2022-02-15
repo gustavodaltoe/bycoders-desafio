@@ -11,6 +11,6 @@ export class PrismaStoresRepository implements StoresRepository {
   }
 
   async create(store: Store): Promise<void> {
-    await prisma.store.create({ data: store });
+    await prisma.store.create({ data: store.toPersistence() });
   }
 }

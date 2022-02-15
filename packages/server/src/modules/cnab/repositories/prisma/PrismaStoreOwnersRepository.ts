@@ -11,6 +11,6 @@ export class PrismaStoreOwnersRepository implements StoreOwnersRepository {
   }
 
   public async create(storeOwner: StoreOwner): Promise<void> {
-    await prisma.storeOwner.create({ data: storeOwner });
+    await prisma.storeOwner.create({ data: storeOwner.toPersistence() });
   }
 }

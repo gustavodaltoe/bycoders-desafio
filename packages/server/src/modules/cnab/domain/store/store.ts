@@ -32,4 +32,13 @@ export class Store extends Entity<StoreProps> {
       id,
     );
   }
+
+  toPersistence() {
+    return {
+      id: this.id,
+      name: this.name,
+      ownerCpf: this.ownerCpf,
+      balance: this.balance,
+    };
+  }
 }

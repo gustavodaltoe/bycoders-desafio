@@ -21,4 +21,11 @@ export class StoreOwner extends Entity<StoreOwnerProps> {
   static create(props: StoreOwnerProps, id?: string): StoreOwner {
     return new StoreOwner(props, id);
   }
+
+  toPersistence() {
+    return {
+      cpf: this.cpf,
+      name: this.name,
+    };
+  }
 }
