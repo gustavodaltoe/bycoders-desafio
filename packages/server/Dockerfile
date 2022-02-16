@@ -16,6 +16,7 @@ COPY package.json yarn.lock lerna.json ./
 COPY ./packages/server ./packages/server
 COPY ./packages/server/scripts ./packages/server/scripts
 
+ENV TZ=America/Sao_Paulo
 RUN set -x \
     && npx lerna bootstrap --use-workspaces \
     && chmod +x ./packages/server/scripts
