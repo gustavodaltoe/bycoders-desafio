@@ -13,8 +13,10 @@ export const {
   theme: {
     colors: {
       primary: '#151718',
+      primaryLighter: '#2c2e30',
       contrastPrimary: '#fff',
       secondary: '#32275F',
+      green: '#4BB543',
     },
   },
   media: {

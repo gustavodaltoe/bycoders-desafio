@@ -13,5 +13,6 @@ export const Button = styled('button', {
   borderRadius: '.8rem',
   width: '20rem',
   height: '5rem',
-  background: '$secondary',
+  background: '$primaryLighter',
+  border: '1px dashed $contrastPrimary',
 });
