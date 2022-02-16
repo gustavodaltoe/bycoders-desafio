@@ -15,4 +15,8 @@ export const Button = styled('button', {
   height: '5rem',
   background: '$primaryLighter',
   border: '1px dashed $contrastPrimary',
+  transition: 'background .3s ease',
+  '&:hover': {
+    background: '$secondary',
+  },
 });

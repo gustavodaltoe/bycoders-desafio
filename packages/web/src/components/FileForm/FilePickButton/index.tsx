@@ -7,7 +7,7 @@ type Props = Omit<React.ComponentProps<typeof S.HiddenInput>, 'onChange'> & {
   maxSize?: number;
 };
 
-export const FilePickButton = (props: Props) => {
+export const FilePickButton = ({ onChange, maxSize, ...props }: Props) => {
   const [file, setFile] = useState<File | null>(null);
   const fileInput = React.useRef<HTMLInputElement>(null);
 
@@ -24,13 +24,13 @@ export const FilePickButton = (props: Props) => {
       toast.error('Apenas arquivos .txt são autorizados.');
       return;
     }
-    if (props.maxSize && file && file.size > props.maxSize) {
-      toast.error(`O tamanho limite do arquivo é ${props.maxSize} bytes.`);
+    if (maxSize && file && file.size > maxSize) {
+      toast.error(`O tamanho limite do arquivo é ${maxSize} bytes.`);
       return;
     }
 
     setFile(file);
-    props.onChange(file);
+    onChange(file);
   }
 
   const fileSizeInKB = file ? (file.size / 1024).toFixed(2) : 0;
