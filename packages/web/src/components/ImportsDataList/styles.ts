@@ -2,9 +2,7 @@ import { AiOutlineLoading } from 'react-icons/ai';
 import { styled } from '../../styles/stitches.config';
 
 export const Wrapper = styled('div', {
-  marginTop: '4rem',
-  lineHeight: '5rem',
-  borderBottom: '2px solid $primaryLighter',
+  marginY: '4rem',
 
   display: 'flex',
   flexDirection: 'column',
@@ -14,7 +12,10 @@ export const Wrapper = styled('div', {
 
 export const Title = styled('h2', {
   textAlign: 'center',
+  width: '100%',
   marginBottom: '2rem',
+  lineHeight: '5rem',
+  borderBottom: '2px solid $primaryLighter',
 });
 
 export const LoadingIcon = styled(AiOutlineLoading, {
@@ -34,5 +35,14 @@ export const ListItem = styled('div', {
   background: '$primaryLighter',
   width: '100%',
   borderRadius: '0.8rem',
-  padding: '1rem 2rem',
+  padding: '2rem',
+
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  gap: '1.5rem',
+});
+
+export const StoreName = styled('strong', {
+  fontSize: '1.8rem',
 });

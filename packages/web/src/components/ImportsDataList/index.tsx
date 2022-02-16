@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query';
 import { ImportsDataDto } from '../../dtos/ImportsData';
 import { axios } from '../../services/axios';
+import { formatMonetary } from '../../utils';
 import * as S from './styles';
 
 export function ImportsDataList() {
@@ -15,17 +16,20 @@ export function ImportsDataList() {
 
   return (
     <S.Wrapper>
-      <S.Title>Dados importados</S.Title>
+      {!data && !isFetching && <S.Title>Dados importados</S.Title>}
       {isFetching && <S.LoadingIcon size={26} />}
 
       <S.ListWrapper>
         {data?.map((store) => {
           return (
             <S.ListItem key={store.id}>
-              <strong>Loja: {store.name}</strong>
+              <S.StoreName>{store.name}</S.StoreName>
               <div>
-                <b>Benefíciario(a):</b> {store.owner.name} ({store.owner.cpf})
+                <b>Dono(a):</b> {store.owner.name} ({store.owner.cpf})
               </div>
+              <p>
+                <b>Saldo:</b> {formatMonetary(store.balance)}
+              </p>
             </S.ListItem>
           );
         })}
