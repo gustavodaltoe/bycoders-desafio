@@ -2,13 +2,35 @@ import { useState } from 'react';
 import * as S from './styles';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { FilePickButton } from './FilePickButton';
+import { axios } from '../../services/axios';
+import toast from 'react-hot-toast';
+import { queryClient } from '../../services/queryClient';
 
 export const FileForm = () => {
   const [file, setFile] = useState<File | null>(null);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(file);
+    if (!file) return;
+
+    const formData = new FormData();
+
+    formData.append('textFile', file, file.name);
+
+    const toastId = toast.loading('Enviando arquivo...');
+    try {
+      await axios.post('/cnab/upload', formData);
+      toast.success('Arquivo enviado com sucesso', { id: toastId });
+      queryClient.invalidateQueries('importsData');
+    } catch (error: any) {
+      if (error.response?.status === 400) {
+        toast.error('Verifique seu arquivo e tente novamente.', {
+          id: toastId,
+        });
+        return;
+      }
+      toast.error('Erro ao enviar arquivo.', { id: toastId });
+    }
   }
 
   return (

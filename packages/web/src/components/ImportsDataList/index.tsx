@@ -9,7 +9,6 @@ export function ImportsDataList() {
     'importsData',
     async () => {
       const { data } = await axios.get('/cnab');
-      console.log(typeof data);
       return data;
     },
   );
