@@ -12,6 +12,7 @@
   "scripts": {
     "web:dev": "yarn workspace @bycoders/web dev",
     "server:dev": "yarn workspace @bycoders/server dev",
+    "server:prod": "yarn workspace @bycoders/server prod",
     "server:test": "yarn workspace @bycoders/server test"
   },
   "devDependencies": {
