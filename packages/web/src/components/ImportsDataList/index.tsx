@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useQuery } from 'react-query';
 import { ImportsDataDto } from '../../dtos/ImportsData';
 import { axios } from '../../services/axios';
@@ -34,7 +35,9 @@ export function ImportsDataList() {
               <S.TableTitle>Transações:</S.TableTitle>
               <S.TransactionTable>
                 <S.Tr>
-                  <S.Th align="left">Tipo</S.Th>
+                  <S.Th align="left" width={250}>
+                    Tipo
+                  </S.Th>
                   <S.Th align="left">Data</S.Th>
                   <S.Th align="right">Valor</S.Th>
                   <S.Th align="left">Cartão</S.Th>
@@ -43,7 +46,11 @@ export function ImportsDataList() {
                   return (
                     <S.Tr key={transaction.id}>
                       <S.Td>{transaction.type}</S.Td>
-                      <S.Td>{transaction.dateTime}</S.Td>
+                      <S.Td>
+                        {dayjs(transaction.dateTime).format(
+                          'DD/MM/YYYY HH:mm:ss',
+                        )}
+                      </S.Td>
                       <S.Td align="right">
                         {formatMonetary(transaction.amount)}
                       </S.Td>
