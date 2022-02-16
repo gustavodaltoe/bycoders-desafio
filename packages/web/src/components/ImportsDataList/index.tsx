@@ -5,7 +5,7 @@ import { formatMonetary } from '../../utils';
 import * as S from './styles';
 
 export function ImportsDataList() {
-  const { data, isFetching } = useQuery<ImportsDataDto>(
+  const { data, isLoading } = useQuery<ImportsDataDto>(
     'importsData',
     async () => {
       const { data } = await axios.get('/cnab');
@@ -15,20 +15,43 @@ export function ImportsDataList() {
 
   return (
     <S.Wrapper>
-      {!data && !isFetching && <S.Title>Dados importados</S.Title>}
-      {isFetching && <S.LoadingIcon size={26} />}
+      {!data && !isLoading && <S.Title>Dados importados</S.Title>}
+      {isLoading && <S.LoadingIcon size={26} />}
 
       <S.ListWrapper>
         {data?.map((store) => {
           return (
             <S.ListItem key={store.id}>
-              <S.StoreName>{store.name}</S.StoreName>
-              <div>
-                <b>Dono(a):</b> {store.owner.name} ({store.owner.cpf})
-              </div>
-              <p>
-                <b>Saldo:</b> {formatMonetary(store.balance)}
-              </p>
+              <S.ListItemHeader>
+                <S.StoreName>{store.name}</S.StoreName>
+                <div>
+                  <b>Dono(a):</b> {store.owner.name} ({store.owner.cpf})
+                </div>
+                <p>
+                  <b>Saldo:</b> {formatMonetary(store.balance)}
+                </p>
+              </S.ListItemHeader>
+              <S.TableTitle>Transações:</S.TableTitle>
+              <S.TransactionTable>
+                <S.Tr>
+                  <S.Th align="left">Tipo</S.Th>
+                  <S.Th align="left">Data</S.Th>
+                  <S.Th align="right">Valor</S.Th>
+                  <S.Th align="left">Cartão</S.Th>
+                </S.Tr>
+                {store.transactions.map((transaction) => {
+                  return (
+                    <S.Tr key={transaction.id}>
+                      <S.Td>{transaction.type}</S.Td>
+                      <S.Td>{transaction.dateTime}</S.Td>
+                      <S.Td align="right">
+                        {formatMonetary(transaction.amount)}
+                      </S.Td>
+                      <S.Td>{transaction.card}</S.Td>
+                    </S.Tr>
+                  );
+                })}
+              </S.TransactionTable>
             </S.ListItem>
           );
         })}
