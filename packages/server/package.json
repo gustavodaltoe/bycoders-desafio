@@ -4,7 +4,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "prod": "node dist/main",
+    "prod": "node src/infra/http/server.js",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --exit-child src/infra/http/server.ts",
     "build": "tsc",
     "test": "jest --setupFiles dotenv-flow/config",
