@@ -10,6 +10,7 @@
     "packages/*"
   ],
   "scripts": {
+    "build": "lerna run build",
     "web:dev": "yarn workspace @bycoders/web dev",
     "server:dev": "yarn workspace @bycoders/server dev",
     "server:prod": "yarn workspace @bycoders/server prod",
