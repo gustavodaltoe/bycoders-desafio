@@ -1,5 +1,6 @@
 import { Toaster } from 'react-hot-toast';
 import { FileForm } from '../FileForm';
+import { ImportsDataList } from '../ImportsDataList';
 import * as S from './styles';
 
 export function Main() {
@@ -7,6 +8,7 @@ export function Main() {
     <>
       <S.Wrapper>
         <FileForm />
+        <ImportsDataList />
       </S.Wrapper>
       <Toaster />
     </>

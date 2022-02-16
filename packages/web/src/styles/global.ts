@@ -36,6 +36,14 @@ const globalStyles = globalCss({
   img: {
     display: 'block',
   },
+  '@keyframes spin': {
+    from: {
+      transform: 'rotate(0deg)',
+    },
+    to: {
+      transform: 'rotate(360deg)',
+    },
+  },
 });
 
 globalStyles();
