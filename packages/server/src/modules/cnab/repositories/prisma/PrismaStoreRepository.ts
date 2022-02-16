@@ -1,5 +1,7 @@
 import { prisma } from '@infra/prisma/client';
+import { StoreOwner } from '@modules/cnab/domain/store-owner/store-owner';
 import { Store } from '@modules/cnab/domain/store/store';
+import { Transaction } from '@modules/cnab/domain/transaction/transaction';
 import { StoresRepository } from '../StoresRepository';
 
 export class PrismaStoresRepository implements StoresRepository {
@@ -8,6 +10,19 @@ export class PrismaStoresRepository implements StoresRepository {
       where: { ownerCpf, name },
     });
     return !!storeExists;
+  }
+
+  async list(): Promise<Store[]> {
+    const stores = await prisma.store.findMany({
+      include: { owner: true, transactions: true },
+    });
+    return stores.map((store) => {
+      const owner = StoreOwner.create(store.owner, store.owner.cpf);
+      const transactions = store.transactions.map((item) =>
+        Transaction.create(item, item.id),
+      );
+      return Store.create({ ...store, owner, transactions }, store.id);
+    });
   }
 
   async findByName(ownerCpf: string, name: string): Promise<Store | undefined> {

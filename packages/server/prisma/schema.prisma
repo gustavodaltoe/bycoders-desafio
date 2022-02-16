@@ -25,7 +25,7 @@ model Store {
   owner    StoreOwner @relation(fields: [ownerCpf], references: [cpf])
   ownerCpf String     @map("owner_id")
 
-  Transactions Transaction[]
+  transactions Transaction[]
   @@map("stores")
 }
 

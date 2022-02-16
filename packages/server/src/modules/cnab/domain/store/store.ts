@@ -1,9 +1,13 @@
 import { Entity } from '@core/domain/Entity';
+import { StoreOwner } from '../store-owner/store-owner';
+import { Transaction } from '../transaction/transaction';
 
 interface StoreProps {
   name: string;
   ownerCpf: string;
   balance?: number;
+  owner?: StoreOwner;
+  transactions?: Transaction[];
 }
 
 export class Store extends Entity<StoreProps> {
@@ -19,6 +23,14 @@ export class Store extends Entity<StoreProps> {
     return this.props.ownerCpf;
   }
 
+  get owner() {
+    return this.props.owner;
+  }
+
+  get transactions() {
+    return this.props.transactions ?? [];
+  }
+
   get balance() {
     return this.props.balance ?? 0;
   }
@@ -28,6 +40,7 @@ export class Store extends Entity<StoreProps> {
       {
         ...props,
         balance: props.balance ?? 0,
+        transactions: props.transactions ?? [],
       },
       id,
     );
