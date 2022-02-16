@@ -18,9 +18,9 @@ export class PrismaStoresRepository implements StoresRepository {
     });
     return stores.map((store) => {
       const owner = StoreOwner.create(store.owner, store.owner.cpf);
-      const transactions = store.transactions.map((item) =>
-        Transaction.create(item, item.id),
-      );
+      const transactions = store.transactions
+        .sort((a, b) => a.dateTime.getTime() - b.dateTime.getTime())
+        .map((item) => Transaction.create(item, item.id));
       return Store.create({ ...store, owner, transactions }, store.id);
     });
   }
