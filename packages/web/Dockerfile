@@ -9,10 +9,11 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 COPY packages/web/package.json ./packages/web/
 COPY package.json yarn.lock lerna.json ./
+COPY ./packages/web ./packages/web
 
 RUN set -x \
-    && yarn install
+    && npx lerna bootstrap --use-workspaces
 
-COPY ./packages/web .
+COPY . .
 
 CMD ["yarn", "web:dev"]

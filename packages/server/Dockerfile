@@ -13,12 +13,12 @@ WORKDIR /app
 
 COPY packages/server/package.json ./packages/server/
 COPY package.json yarn.lock lerna.json ./
-COPY ./packages/server .
-COPY ./packages/server/scripts .
+COPY ./packages/server ./packages/server
+COPY ./packages/server/scripts ./packages/server/scripts
 
 RUN set -x \
-    && chmod +x ./scripts/server.sh \
-    && yarn install --production=false
+    && npx lerna bootstrap --use-workspaces \
+    && chmod +x ./packages/server/scripts
 
 COPY . .
 
