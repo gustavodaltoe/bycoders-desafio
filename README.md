@@ -57,6 +57,8 @@ Para rodar os testes unitários (precisa estar rodando a aplicação):
 # acessar a instancia
 $ docker-compose exec server bash
 $ yarn server:test 
+# ou para ter o coverage
+$ yarn server:test --coverage
 ```
 
 ### Rodando sem Docker
@@ -74,7 +76,11 @@ $ yarn web:dev
 
 Para rodar os testes unitários
 
-    $ yarn server:test
+```bash
+$ yarn server:test
+# ou para ter o coverage
+$ yarn server:test --coverage
+```
 
 # Documentação da API
 
@@ -212,6 +218,14 @@ Liste todas as transações separados por lojas com seus saldos
 	},
 ]
 ```
+
+# Cobertura de testes
+
+Optei por criar testes unitários apenas para o backend para as partes que dizem respeito ao upload, processamento e persistência dos dados, utilizando a metodologia TDD (Test Driven Development) obtive 100% de cobertura para esse modulo.
+
+Não realizei testes e2e, integração e nem unitários para as funcionalidades de listagem, comunicação http e repositories.
+
+Para mais detalhes: `yarn server:test --coverage`
 
 # Estrutura do banco de dados
 
