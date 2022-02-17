@@ -1,12 +1,39 @@
 # Rodando o ambiente
 
+Configure as variáveis de ambiente
+
+    $ cp ./packages/server/.env.example ./packages/server/.env
+
+### Utilizando Docker
+
 Para rodar a aplicação dentro de containers no Docker:
 
     $ docker-compose up
 
-Para rodar os testes unitários:
+Para rodar os testes unitários (precisa estar rodando a aplicação):
 
-    $ docker-compose run server yarn server:test
+```bash
+# acessar a instancia
+$ docker-compose exec server bash
+$ yarn server:test 
+```
+
+### Rodando sem Docker
+
+Caso prefira rodar sem Docker ou esteja tendo problemas para rodar com ele:
+
+1. É necessário ter um banco postgres rodando
+2. Altere a `./packages/server/.env` com a string de conexão para o seu banco
+
+```bash
+$ yarn # instalar as dependencias
+$ yarn server:dev
+$ yarn web:dev
+```
+
+Para rodar os testes unitários
+
+    $ yarn server:test
 
 # Desafio programação - para vaga desenvolvedor
 
