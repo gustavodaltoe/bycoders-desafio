@@ -35,6 +35,143 @@ Para rodar os testes unitários
 
     $ yarn server:test
 
+# Documentação da API
+
+url local padrão: http://localhost:3333/
+
+---
+
+### Envio de um arquivo CNAB
+
+Envie um arquivo CNAB para ser processado e persistido.
+
+**Endpoint**: POST:/cnab/upload
+
+**Content-Type**: multipart/form-data
+
+**body**: 
+```json
+{ 
+    textFile: File //(Text/plain) 
+}
+```
+
+**Response**: Body vazio com status 201 (created)
+
+---
+
+### Listagem de lojas e suas transações
+
+Liste todas as transações separados por lojas com seus saldos
+
+**Endpoint**: GET:/cnab
+
+**Response**: Array de lojas no formato abaixo
+```ts
+[
+    {
+        id: uuidv4
+        name: string
+        owner: {
+            cpf: string
+            name: string
+        }
+        balance: number // int, needs to be divided by 100
+        transactions: Array<{
+            id: uuidv4
+            type: string
+            amount: number // int, needs to be divided by 100
+            card: string
+            dateTime: Date
+        }>
+    }
+]
+```
+
+**Exemplo de response**:
+```json
+[
+	{
+		"id": "71507a31-3611-4b94-ad67-aac7d0a85d81",
+		"name": "BAR DO JOÃO",
+		"owner": {
+			"cpf": "09620676017",
+			"name": "JOÃO MACEDO"
+		},
+		"balance": -20400,
+		"transactions": [
+			{
+				"id": "1b31ce6e-2a49-432c-af07-954bc1937286",
+				"type": "Financiamento",
+				"amount": -14200,
+				"card": "4753****3153",
+				"dateTime": "2019-03-01T18:34:53.000Z"
+			},
+			{
+				"id": "2a1eaf33-6cae-4915-82c6-81dc7b2c7c15",
+				"type": "Financiamento",
+				"amount": -14200,
+				"card": "4753****3153",
+				"dateTime": "2019-03-01T18:34:53.000Z"
+			},
+			{
+				"id": "113c2383-5b8b-45e8-ad6d-58b4195ee26b",
+				"type": "Débito",
+				"amount": 15200,
+				"card": "1234****7890",
+				"dateTime": "2019-03-02T02:30:00.000Z"
+			},
+			{
+				"id": "dbfa5994-5f83-44fd-8055-83d81c5c1980",
+				"type": "Débito",
+				"amount": 15200,
+				"card": "1234****7890",
+				"dateTime": "2019-03-02T02:30:00.000Z"
+			},
+			{
+				"id": "06187fb0-36c7-4ebf-a042-84ea857073d1",
+				"type": "Boleto",
+				"amount": -11200,
+				"card": "3648****0099",
+				"dateTime": "2019-03-02T02:42:34.000Z"
+			},
+			{
+				"id": "19b51499-0f3e-4309-8477-c7d0c2750656",
+				"type": "Boleto",
+				"amount": -11200,
+				"card": "3648****0099",
+				"dateTime": "2019-03-02T02:42:34.000Z"
+			}
+		]
+	},
+	{
+		"id": "8d142014-9ff2-44f2-a666-732d8fd62bec",
+		"name": "LOJA DO Ó - FILIAL",
+		"owner": {
+			"cpf": "55641815063",
+			"name": "MARIA JOSEFINA"
+		},
+		"balance": 30464,
+		"transactions": [
+			{
+				"id": "649452df-2c84-4a21-bb46-dbcb3b05b1eb",
+				"type": "Crédito",
+				"amount": 15232,
+				"card": "1234****6678",
+				"dateTime": "2019-03-01T13:00:00.000Z"
+			},
+			{
+				"id": "363fa03a-1d00-411d-a787-f3a8342baf76",
+				"type": "Crédito",
+				"amount": 15232,
+				"card": "1234****6678",
+				"dateTime": "2019-03-01T13:00:00.000Z"
+			}
+		]
+	},
+]
+```
+
 # Desafio programação - para vaga desenvolvedor
 
 Por favor leiam este documento do começo ao fim, com muita atenção.
