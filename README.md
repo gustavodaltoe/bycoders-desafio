@@ -50,9 +50,9 @@ Envie um arquivo CNAB para ser processado e persistido.
 **Content-Type**: multipart/form-data
 
 **body**: 
-```json
+```
 { 
-    textFile: File //(Text/plain) 
+  textFile: File // Text/plain (.txt file)
 }
 ```
 
@@ -69,22 +69,22 @@ Liste todas as transações separados por lojas com seus saldos
 **Response**: Array de lojas no formato abaixo
 ```ts
 [
-    {
-        id: uuidv4
-        name: string
-        owner: {
-            cpf: string
-            name: string
-        }
-        balance: number // int, needs to be divided by 100
-        transactions: Array<{
-            id: uuidv4
-            type: string
-            amount: number // int, needs to be divided by 100
-            card: string
-            dateTime: Date
-        }>
+  {
+    id: uuidv4
+    name: string
+    owner: {
+      cpf: string
+      name: string
     }
+    balance: number // int, needs to be divided by 100
+    transactions: Array<{
+      id: uuidv4
+      type: string
+      amount: number // int, needs to be divided by 100
+      card: string
+      dateTime: Date
+    }>
+  }
 ]
 ```
 
